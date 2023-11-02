@@ -1,12 +1,28 @@
 package ru.job4j.cinema.model;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class Film {
+    public static final Map<String, String> COLUMN_MAPPING = Map.of(
+            "id", "id",
+            "name", "name",
+            "description", "description",
+            "year", "year",
+            "genre_id", "genreId",
+            "minimal_age", "minimalAge",
+            "duration_in_minutes", "durationInMinutes",
+            "file_id","fileId"
+    );
+
     private int id;
     private String name;
     private String description;
     private Detail detail;
+    private int year;
+    private int genreId;
+    private int minimalAge;
+    private int durationInMinutes;
     private int fileId;
 
     public Film() {
@@ -16,8 +32,12 @@ public class Film {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.fileId = fileId;
         this.detail = detail;
+        this.year = detail.year;
+        this.genreId = detail.genreId;
+        this.minimalAge = detail.minimalAge;
+        this.durationInMinutes = detail.durationInMinutes;
+        this.fileId = fileId;
     }
 
     public static class Detail {
@@ -59,35 +79,35 @@ public class Film {
     }
 
     public int getYear() {
-        return detail.year;
+        return year;
     }
 
     public void setYear(int year) {
-        detail.year = year;
+        this.year = year;
     }
 
     public int getGenreId() {
-        return detail.genreId;
+        return genreId;
     }
 
     public void setGenreId(int genreId) {
-        detail.genreId = genreId;
+        this.genreId = genreId;
     }
 
     public int getMinimalAge() {
-        return detail.minimalAge;
+        return minimalAge;
     }
 
     public void setMinimalAge(int minimalAge) {
-        detail.minimalAge = minimalAge;
+        this.minimalAge = minimalAge;
     }
 
     public int getDurationInMinutes() {
-        return detail.durationInMinutes;
+        return durationInMinutes;
     }
 
     public void setDurationInMinutes(int durationInMinutes) {
-        detail.durationInMinutes = durationInMinutes;
+        this.durationInMinutes = durationInMinutes;
     }
 
     public int getFileId() {
@@ -96,6 +116,14 @@ public class Film {
 
     public void setFileId(int fileId) {
         this.fileId = fileId;
+    }
+
+    public Detail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(Detail detail) {
+        this.detail = detail;
     }
 
     @Override
