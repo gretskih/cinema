@@ -1,0 +1,10 @@
+insert into genres(id, name) values(1, 'Триллер');
+insert into genres(id, name) values(2, 'Драма');
+insert into genres(id, name) values(3, 'Криминал');
+insert into genres(id, name) values(4, 'Фантастика');
+insert into genres(id, name) values(5, 'Фэнтэзи');
+insert into genres(id, name) values(6, 'Комедия');
+insert into genres(id, name) values(7, 'Мелодрама');
+insert into genres(id, name) values(8, 'История');
+insert into genres(id, name) values(9, 'Военный');
+insert into genres(id, name) values(10, 'Приключения');
