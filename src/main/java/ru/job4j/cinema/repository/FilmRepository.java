@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface FilmRepository {
-    Optional<Film> findById(int id);
+    Film findById(int id);
+
     Collection<Film> findAll();
 }

@@ -2,11 +2,13 @@ package ru.job4j.cinema.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import org.sql2o.Sql2o;
 import ru.job4j.cinema.model.Ticket;
 
 import java.util.Optional;
 
+@Repository
 public class Sql2oTicketRepository implements TicketRepository {
     private final Sql2o sql2o;
     private static final Logger LOG = LoggerFactory.getLogger(Sql2oTicketRepository.class);
