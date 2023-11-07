@@ -26,10 +26,15 @@ public class SimpleFilmSessionService implements FilmSessionService {
     }
 
     @Override
+    public FilmSession findById(int id) {
+        return filmSessionRepository.findById(id);
+    }
+
+    @Override
     public Collection<SessionPreview> findAll() {
         Collection<FilmSession> filmSessions = filmSessionRepository.findAll();
         Collection<SessionPreview> sessionPreviews = new ArrayList<>();
-        for(FilmSession filmSession : filmSessions) {
+        for (FilmSession filmSession : filmSessions) {
             String hallName = hallRepository.findById(filmSession.getHallId()).getName();
             String filmName = filmRepository.findById(filmSession.getFilmId()).getName();
             SessionPreview sessionPreview = new SessionPreview(filmSession.getId(), filmName, hallName,

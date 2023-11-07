@@ -31,10 +31,10 @@ public class SimpleFilmService implements FilmService {
     public Collection<FilmPreview> findAll() {
         Collection<Film> films = filmRepository.findAll();
         Collection<FilmPreview> filmPreviews = new ArrayList<>();
-        for(Film film : films) {
+        for (Film film : films) {
             String genre = genreRepository.findById(film.getGenreId()).orElse(new Genre(0, "")).getName();
             FilmPreview filmPreview = new FilmPreview(film.getId(), film.getName(), film.getDescription(), film.getYear(),
-                    film.getMinimalAge(), film.getDurationInMinutes(),genre);
+                    film.getMinimalAge(), film.getDurationInMinutes(), genre);
             filmPreviews.add(filmPreview);
         }
         return filmPreviews;

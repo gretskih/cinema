@@ -5,14 +5,14 @@ import java.util.Objects;
 
 public class SessionPreview {
     private int id;
-    private String fileName;
+    private String filmName;
     private String hallName;
     private LocalDateTime startTime;
     private int price;
 
-    public SessionPreview(int id, String fileName, String hallName, LocalDateTime startTime, int price) {
+    public SessionPreview(int id, String filmName, String hallName, LocalDateTime startTime, int price) {
         this.id = id;
-        this.fileName = fileName;
+        this.filmName = filmName;
         this.hallName = hallName;
         this.startTime = startTime;
         this.price = price;
@@ -26,12 +26,12 @@ public class SessionPreview {
         this.id = id;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFilmName() {
+        return filmName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFilmName(String filmName) {
+        this.filmName = filmName;
     }
 
     public String getHallName() {
@@ -60,8 +60,12 @@ public class SessionPreview {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         SessionPreview that = (SessionPreview) o;
         return id == that.id;
     }

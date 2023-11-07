@@ -27,8 +27,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="sessionPreview: ${sessionPreviews}">
-                    <td th:text="${sessionPreview.startTime}" />
-                    <td th:text="${sessionPreview.fileName}" />
+                    <td><a th:text="${{sessionPreview.startTime}}"
+                           th:href="@{/tickets/create(sessionId = ${sessionPreview.id},
+                                filmName = ${sessionPreview.filmName})}"></a></td>
+                    <td th:text="${sessionPreview.filmName}" />
                     <td th:text="${sessionPreview.hallName}" />
                     <td th:text="${sessionPreview.price}"/>
                 </tr>

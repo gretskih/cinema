@@ -20,11 +20,13 @@ public class Sql2oTicketRepository implements TicketRepository {
     @Override
     public Optional<Ticket> save(Ticket ticket) {
         try (var connection = sql2o.open()) {
-            var query = connection.createQuery("INSERT INTO tickets (id, session_id, row_number, place_number, user_id) VALUES (:id, :sessionId, :rowNumber, :placeNumber, :userId)", true)
+            var query = connection.createQuery("INSERT INTO tickets (" +
+                            "session_id, row_number, place_number, user_id) " +
+                            "VALUES (:sessionId, :rowNumber, :placeNumber, :userId)", true)
                     .addParameter("sessionId", ticket.getSessionId())
                     .addParameter("rowNumber", ticket.getRowNumber())
                     .addParameter("placeNumber", ticket.getPlaceNumber())
-                    .addParameter("userId", ticket.getUserId());
+                    .addParameter("userId", 0);
             int generatedId = query.executeUpdate().getKey(Integer.class);
             ticket.setId(generatedId);
             return Optional.of(ticket);
