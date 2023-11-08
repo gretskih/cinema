@@ -7,6 +7,8 @@ import ru.job4j.cinema.repository.HallRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class SimpleHallService implements HallService {
@@ -20,14 +22,5 @@ public class SimpleHallService implements HallService {
     @Override
     public Hall findById(int id) {
         return hallRepository.findById(id);
-    }
-
-    @Override
-    public Collection<Integer> getList(int count) {
-        Collection<Integer> rows = new HashSet<>();
-        for (int i = 1; i <= count; i++) {
-            rows.add(i);
-        }
-        return rows;
     }
 }

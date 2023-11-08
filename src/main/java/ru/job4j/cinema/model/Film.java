@@ -18,7 +18,6 @@ public class Film {
     private int id;
     private String name;
     private String description;
-    private Detail detail;
     private int year;
     private int genreId;
     private int minimalAge;
@@ -32,7 +31,6 @@ public class Film {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.detail = detail;
         this.year = detail.year;
         this.genreId = detail.genreId;
         this.minimalAge = detail.minimalAge;
@@ -116,14 +114,6 @@ public class Film {
 
     public void setFileId(int fileId) {
         this.fileId = fileId;
-    }
-
-    public Detail getDetail() {
-        return detail;
-    }
-
-    public void setDetail(Detail detail) {
-        this.detail = detail;
     }
 
     @Override

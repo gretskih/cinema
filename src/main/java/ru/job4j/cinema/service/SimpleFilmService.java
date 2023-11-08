@@ -32,7 +32,7 @@ public class SimpleFilmService implements FilmService {
         Collection<Film> films = filmRepository.findAll();
         Collection<FilmPreview> filmPreviews = new ArrayList<>();
         for (Film film : films) {
-            String genre = genreRepository.findById(film.getGenreId()).orElse(new Genre(0, "")).getName();
+            String genre = genreRepository.findById(film.getGenreId()).getName();
             FilmPreview filmPreview = new FilmPreview(film.getId(), film.getName(), film.getDescription(), new FilmPreview.Detail(film.getYear(),
                     film.getMinimalAge(), film.getDurationInMinutes(), genre), film.getFileId());
             filmPreviews.add(filmPreview);

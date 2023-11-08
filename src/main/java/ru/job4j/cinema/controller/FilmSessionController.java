@@ -4,8 +4,8 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.SimpleFilmSessionService;
 
 @ThreadSafe
@@ -13,15 +13,15 @@ import ru.job4j.cinema.service.SimpleFilmSessionService;
 @RequestMapping("/filmsessions")
 public class FilmSessionController {
 
-    private final SimpleFilmSessionService simpleFilmSessionService;
+    private final FilmSessionService filmSessionService;
 
-    public FilmSessionController(SimpleFilmSessionService simpleFilmSessionService) {
-        this.simpleFilmSessionService = simpleFilmSessionService;
+    public FilmSessionController(FilmSessionService filmSessionService) {
+        this.filmSessionService = filmSessionService;
     }
 
     @GetMapping
     public String getAll(Model model) {
-        model.addAttribute("sessionPreviews", simpleFilmSessionService.findAll());
+        model.addAttribute("sessionPreviews", filmSessionService.findAll());
         return "filmsessions/list";
     }
 

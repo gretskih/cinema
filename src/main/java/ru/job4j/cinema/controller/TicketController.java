@@ -12,6 +12,9 @@ import ru.job4j.cinema.service.FilmSessionService;
 import ru.job4j.cinema.service.HallService;
 import ru.job4j.cinema.service.TicketService;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @ThreadSafe
 @Controller
 @RequestMapping("/tickets")
@@ -21,7 +24,7 @@ public class TicketController {
     private final FilmSessionService filmSessionService;
     private final TicketService ticketService;
 
-    public TicketController(HallService hallService, FilmSessionService filmSessionService, TicketRepository ticketRepository, TicketService ticketService) {
+    public TicketController(HallService hallService, FilmSessionService filmSessionService, TicketService ticketService) {
         this.hallService = hallService;
         this.filmSessionService = filmSessionService;
         this.ticketService = ticketService;
@@ -37,8 +40,8 @@ public class TicketController {
         model.addAttribute("hallName", hall.getName());
         model.addAttribute("startTime", filmSession.getStartTime());
         model.addAttribute("price", filmSession.getPrice());
-        model.addAttribute("rows", hallService.getList(hall.getRowCount()));
-        model.addAttribute("places", hallService.getList(hall.getPlaceCount()));
+        model.addAttribute("rows", IntStream.range(1, hall.getRowCount() + 1).boxed().collect(Collectors.toList()));
+        model.addAttribute("places", IntStream.range(1, hall.getPlaceCount() + 1).boxed().collect(Collectors.toList()));
         return "tickets/create";
     }
 

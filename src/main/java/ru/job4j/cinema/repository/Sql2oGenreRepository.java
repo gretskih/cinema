@@ -16,11 +16,10 @@ public class Sql2oGenreRepository implements GenreRepository {
     }
 
     @Override
-    public Optional<Genre> findById(int id) {
+    public Genre findById(int id) {
         try (var connection = sql2o.open()) {
             var query = connection.createQuery("SELECT * FROM genres WHERE id = :id");
-            var genre = query.addParameter("id", id).executeAndFetchFirst(Genre.class);
-            return Optional.ofNullable(genre);
+            return query.addParameter("id", id).executeAndFetchFirst(Genre.class);
         }
     }
 }
