@@ -7,7 +7,6 @@ import java.util.Collection;
 public interface HallService {
     Hall findById(int id);
 
-    Collection<Integer> getRows(int id);
+    Collection<Integer> getList(int count);
 
-    Collection<Integer> getPlaces(int id);
 }

@@ -37,18 +37,17 @@ public class TicketController {
         model.addAttribute("hallName", hall.getName());
         model.addAttribute("startTime", filmSession.getStartTime());
         model.addAttribute("price", filmSession.getPrice());
-        model.addAttribute("rows", hallService.getRows(hall.getId()));
-        model.addAttribute("places", hallService.getPlaces(hall.getId()));
-
+        model.addAttribute("rows", hallService.getList(hall.getRowCount()));
+        model.addAttribute("places", hallService.getList(hall.getPlaceCount()));
         return "tickets/create";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute Ticket ticket, Model model) {
         var newTicket = ticketService.save(ticket);
-        if(newTicket.isEmpty()) {
-            model.addAttribute("message", "Не удалось приобрести билет на заданное место. " +
-                    "Вероятно оно уже занято. Перейдите на страницу бронирования билетов и попробуйте снова.");
+        if (newTicket.isEmpty()) {
+            model.addAttribute("message", "Не удалось приобрести билет на заданное место. "
+                    + "Вероятно оно уже занято. Перейдите на страницу бронирования билетов и попробуйте снова.");
             return "errors/404";
         }
         model.addAttribute("message", "Вы успешно приобрели билет: ряд %d место %d"

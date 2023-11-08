@@ -1,5 +1,7 @@
 package ru.job4j.cinema.preview;
 
+import ru.job4j.cinema.model.Film;
+
 import java.util.Objects;
 
 public class FilmPreview {
@@ -10,15 +12,31 @@ public class FilmPreview {
     private int minimalAge;
     private int durationInMinutes;
     private String genre;
+    private int fileId;
 
-    public FilmPreview(int id, String name, String description, int year, int minimalAge, int durationInMinutes, String genre) {
+    public FilmPreview(int id, String name, String description, Detail detail, int fileId) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.year = year;
-        this.minimalAge = minimalAge;
-        this.durationInMinutes = durationInMinutes;
-        this.genre = genre;
+        this.year = detail.year;
+        this.minimalAge = detail.minimalAge;
+        this.durationInMinutes = detail.durationInMinutes;
+        this.genre = detail.genre;
+        this.fileId = fileId;
+    }
+
+    public static class Detail {
+        private int year;
+        private int minimalAge;
+        private int durationInMinutes;
+        private String genre;
+
+        public Detail(int year, int minimalAge, int durationInMinutes, String genre) {
+            this.year = year;
+            this.minimalAge = minimalAge;
+            this.durationInMinutes = durationInMinutes;
+            this.genre = genre;
+        }
     }
 
     public int getId() {
@@ -75,6 +93,14 @@ public class FilmPreview {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public int getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
     }
 
     @Override

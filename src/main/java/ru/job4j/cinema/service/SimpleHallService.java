@@ -23,20 +23,11 @@ public class SimpleHallService implements HallService {
     }
 
     @Override
-    public Collection<Integer> getRows(int id) {
+    public Collection<Integer> getList(int count) {
         Collection<Integer> rows = new HashSet<>();
-        for (int i = 1; i <= findById(id).getRowCount(); i++) {
+        for (int i = 1; i <= count; i++) {
             rows.add(i);
         }
         return rows;
-    }
-
-    @Override
-    public Collection<Integer> getPlaces(int id) {
-        Collection<Integer> places = new HashSet<>();
-        for (int i = 1; i <= findById(id).getPlaceCount(); i++) {
-            places.add(i);
-        }
-        return places;
     }
 }
