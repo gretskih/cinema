@@ -32,14 +32,11 @@ public class TicketController {
 
     @GetMapping("/create")
     public String getCreationPage(Model model, int sessionId, String filmName) {
-
         FilmSession filmSession = filmSessionService.findById(sessionId);
         Hall hall = hallService.findById(filmSession.getHallId());
-        model.addAttribute("sessionId", sessionId);
+        model.addAttribute("filmSession", filmSession);
+        model.addAttribute("hall", hall);
         model.addAttribute("filmName", filmName);
-        model.addAttribute("hallName", hall.getName());
-        model.addAttribute("startTime", filmSession.getStartTime());
-        model.addAttribute("price", filmSession.getPrice());
         model.addAttribute("rows", IntStream.range(1, hall.getRowCount() + 1).boxed().collect(Collectors.toList()));
         model.addAttribute("places", IntStream.range(1, hall.getPlaceCount() + 1).boxed().collect(Collectors.toList()));
         return "tickets/create";

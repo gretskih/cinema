@@ -33,7 +33,6 @@ public class SimpleFilmSessionService implements FilmSessionService {
     @Override
     public Collection<SessionPreview> findAll() {
         Collection<FilmSession> filmSessions = filmSessionRepository.findAll();
-        filmSessions.forEach(System.out::println);
         Collection<SessionPreview> sessionPreviews = new ArrayList<>();
         for (FilmSession filmSession : filmSessions) {
             String hallName = hallRepository.findById(filmSession.getHallId()).getName();
