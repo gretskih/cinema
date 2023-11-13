@@ -9,14 +9,14 @@
     <script th:src="@{/js/code.jquery.com_jquery-3.7.0.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
 
-    <title>Кинотеатр!</title>
+    <title>Кинотека</title>
 </head>
-<body>
-<div class="container-fluid p-0">
+<body style="">
+<div class="container p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
         <div class="row">
-            <table class="table">
+            <table class="table table-borderless">
                 <thead>
                 <tr>
                     <th scope="col"></th>
@@ -29,8 +29,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="filmPreview: ${filmPreviews}">
-                    <td class="mb-3"><img th:src="@{/files/{fileId}(fileId=${filmPreview.fileId})}" class="w-100" alt="No image"></td>
+                <tr class="text-dark" th:each="filmPreview: ${filmPreviews}">
+                    <td class="mb-3">
+                        <img th:src="@{/files/{fileId}(fileId=${filmPreview.fileId})}" class="w-100" alt="No image">
+                    </td>
                     <td th:text="${filmPreview.name}" />
                     <td th:text="${filmPreview.description}" />
                     <td th:text="${filmPreview.year}" />

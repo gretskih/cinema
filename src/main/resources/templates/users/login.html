@@ -9,10 +9,10 @@
     <script th:src="@{/js/code.jquery.com_jquery-3.7.0.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
 
-    <title>Успешно!</title>
+    <title>Вход</title>
 </head>
-<body>
-<div class="container-fluid p-0">
+<body style="">
+<div class="container p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
         <div class="row">
@@ -31,10 +31,10 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <div class="mb-3 row">
-                        <div class="col-7">
+                        <div class="col-6">
                             <p>Не зарегистрированы? <span><a th:href="@{/users/register}">Зарегистрироваться</a></span></p>
                         </div>
-                        <div class="col-5">
+                        <div class="col-6">
                             <div class="row">
                                 <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/}">Отмена</a></div>
                                 <div class="col-6"><button class="btn btn-primary w-100" type="submit">Войти</button>

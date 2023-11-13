@@ -9,14 +9,14 @@
   <script th:src="@{/js/code.jquery.com_jquery-3.7.0.min.js}"></script>
   <script th:src="@{/js/bootstrap.min.js}"></script>
 
-  <title>Кинотеатр!</title>
+  <title>Покупка билета</title>
 </head>
-<body>
-<div class="container-fluid p-0">
+<body style="">
+<div class="container p-0">
   <header th:insert="blocks/header :: header"></header>
   <div class="container-fluid">
     <div class="row">
-      <table class="table">
+      <table class="table table-borderless">
         <thead>
         <tr>
           <th scope="col">Начало</th>
@@ -40,6 +40,15 @@
         <input type="hidden" name="userId" th:value="${user.id}">
         <div class="row">
           <div class="col-6">
+            <div class="d-flex justify-content-center m-2">
+              <div class="d-inline-flex rounded-circle border border-primary m-1" style="height: 0.3em; width: 10em;"></div>
+            </div>
+            <div class="d-flex justify-content-center" th:each="row : ${rows}">
+              <div class="d-inline-flex rounded-circle border border-primary m-1 justify-content-center" th:each="place : ${places}" th:text="${place}" style="height: 2em; width: 2em;">
+            </div>
+          </div>
+          </div>
+          <div class="col-6">
           <div class="col">
             <div class="mb-3">
               <label for="rowNumber"><b>Выберите ряд</b></label>
@@ -57,14 +66,17 @@
             </div>
           </div>
           </div>
-          <div class="col-6"></div>
         </div>
+        <div class="row">
         <div class="col-6"></div>
         <div class="col-6">
           <div class="row">
-            <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/filmsessions}">Отмена</a></div>
-            <div class="col-6"><button class="btn btn-primary w-100" type="submit">Купить</button></div>
+            <div class="col-1"></div>
+            <div class="col-5"><a class="btn btn-danger w-100" th:href="@{/filmsessions}">Отмена</a></div>
+            <div class="col-5"><button class="btn btn-primary w-100" type="submit">Купить</button></div>
+            <div class="col-1"></div>
           </div>
+        </div>
         </div>
       </form>
   </div>

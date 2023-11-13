@@ -9,14 +9,14 @@
     <script th:src="@{/js/code.jquery.com_jquery-3.7.0.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
 
-    <title>Кинотеатр!</title>
+    <title>Расписание</title>
 </head>
-<body>
-<div class="container-fluid p-0">
+<body style="">
+<div class="container p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
         <div class="row">
-            <table class="table">
+            <table class="table table-borderless">
                 <thead>
                 <tr>
                     <th scope="col">Начало</th>
@@ -26,8 +26,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="sessionPreview: ${sessionPreviews}">
-                    <td><a th:text="${{sessionPreview.startTime}}"
+                <tr class="text-dark" th:each="sessionPreview: ${sessionPreviews}">
+                    <td><a class="link-dark" th:text="${{sessionPreview.startTime}}"
                            th:href="@{/tickets/create(sessionId = ${sessionPreview.id},
                                 filmName = ${sessionPreview.filmName})}"></a></td>
                     <td th:text="${sessionPreview.filmName}" />
