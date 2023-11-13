@@ -19,12 +19,12 @@ class AuthorizationFilterTest {
 
     private HttpServletRequest request = mock(HttpServletRequest.class);
     private HttpServletResponse response = mock(HttpServletResponse.class);
-    private MockHttpSession session = new MockHttpSession();
     private FilterChain filterChain = mock(FilterChain.class);
     private AuthorizationFilter authorizationFilter = new AuthorizationFilter();
 
     @Test
     public void whenPostTicketWithValidUserThenCallNextFilter() throws ServletException, IOException {
+        MockHttpSession session = new MockHttpSession();
         session.setAttribute("user", "Ivan");
         when(request.getRequestURI()).thenReturn("/tickets");
         when(request.getSession()).thenReturn(session);
@@ -37,6 +37,7 @@ class AuthorizationFilterTest {
 
     @Test
     public void whenRequestIndexPageWithNullUserThenCallNextFilter() throws ServletException, IOException {
+        MockHttpSession session = new MockHttpSession();
         when(request.getRequestURI()).thenReturn("/");
         when(request.getSession()).thenReturn(session);
         when(request.getMethod()).thenReturn("GET");
@@ -48,6 +49,7 @@ class AuthorizationFilterTest {
 
     @Test
     public void whenPostTicketWithNullUserThenGetLoginPage() throws ServletException, IOException {
+        MockHttpSession session = new MockHttpSession();
         String expectedRedirect = request.getContextPath() + "/users/login";
         var redirectCaptor = ArgumentCaptor.forClass(String.class);
         when(request.getRequestURI()).thenReturn("/tickets");

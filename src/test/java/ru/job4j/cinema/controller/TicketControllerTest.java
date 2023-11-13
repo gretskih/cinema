@@ -52,26 +52,20 @@ class TicketControllerTest {
 
         var model = new ConcurrentModel();
         var view = ticketController.getCreationPage(model, sessionId, filmName);
-        var actualSessionId = model.getAttribute("sessionId");
         var actualFilmName = model.getAttribute("filmName");
-        var actualHallName = model.getAttribute("hallName");
-        var actualStartTime = model.getAttribute("startTime");
-        var actualPrice = model.getAttribute("price");
+        var actualHall = model.getAttribute("hall");
+        var actualFilmSession = model.getAttribute("filmSession");
         var actualRows = model.getAttribute("rows");
         var actualPlaces = model.getAttribute("places");
-
         var actualSessionIdFromCapture = sessionIdCaptor.getValue();
         var actualHallId = hallIdCaptor.getValue();
 
-        assertThat(view).isEqualTo("tickets/create");
-        assertThat(actualSessionId).isEqualTo(sessionId);
+        assertThat(actualFilmSession).usingRecursiveComparison().isEqualTo(filmSession);
+        assertThat(hall).usingRecursiveComparison().isEqualTo(hall);
         assertThat(actualFilmName).isEqualTo(filmName);
-        assertThat(actualHallName).isEqualTo(hall.getName());
-        assertThat(actualStartTime).isEqualTo(filmSession.getStartTime());
-        assertThat(actualPrice).isEqualTo(filmSession.getPrice());
         assertThat(actualRows).isEqualTo(expectedList);
         assertThat(actualPlaces).isEqualTo(expectedList);
-
+        assertThat(view).isEqualTo("tickets/create");
         assertThat(actualSessionIdFromCapture).isEqualTo(sessionId);
         assertThat(actualHallId).isEqualTo(hallId);
     }
