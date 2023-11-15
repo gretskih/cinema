@@ -2,6 +2,7 @@ package ru.job4j.cinema.service;
 
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
+import ru.job4j.cinema.model.Film;
 import ru.job4j.cinema.model.FilmSession;
 import ru.job4j.cinema.preview.SessionPreview;
 import ru.job4j.cinema.repository.FilmRepository;
@@ -10,6 +11,9 @@ import ru.job4j.cinema.repository.HallRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @ThreadSafe
 @Service
@@ -31,7 +35,7 @@ public class SimpleFilmSessionService implements FilmSessionService {
     }
 
     @Override
-    public Collection<SessionPreview> findAll() {
+    public Map<String, Collection<SessionPreview>> findAll() {
         Collection<FilmSession> filmSessions = filmSessionRepository.findAll();
         Collection<SessionPreview> sessionPreviews = new ArrayList<>();
         for (FilmSession filmSession : filmSessions) {
@@ -41,6 +45,11 @@ public class SimpleFilmSessionService implements FilmSessionService {
                     filmSession.getStartTime(), filmSession.getPrice());
             sessionPreviews.add(sessionPreview);
         }
-        return sessionPreviews;
+        Map<String, Collection<SessionPreview>> mapSessionPreviews = new TreeMap<>();
+        for (Film film :  filmRepository.findAll()) {
+            var collectionSession = sessionPreviews.stream().filter(x -> x.getFilmName().equals(film.getName())).toList();
+            mapSessionPreviews.putIfAbsent(film.getName(), collectionSession);
+        }
+        return mapSessionPreviews;
     }
 }

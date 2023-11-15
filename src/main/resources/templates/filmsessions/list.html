@@ -11,32 +11,35 @@
 
     <title>Расписание</title>
 </head>
-<body style="">
+<body >
 <div class="container p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
-        <div class="row">
+        <div class="row shadow-lg rounded m-4 p-2" th:each="sessionPreview: ${sessionPreviews}">
+            <div class="col-2"></div>
+            <div class="col-8">
+            <h5 class="text-center" style="color: #442c66" th:text="${sessionPreview.key}"></h5>
             <table class="table table-borderless">
                 <thead>
                 <tr>
-                    <th scope="col">Начало</th>
-                    <th scope="col">Фильм</th>
-                    <th scope="col">Кинозал</th>
-                    <th scope="col">Цена</th>
+                    <th scope="col" style="color: #442c66">Начало сеанса</th>
+                    <th scope="col" style="color: #442c66">Кинозал</th>
+                    <th scope="col" style="color: #442c66">Цена</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="text-dark" th:each="sessionPreview: ${sessionPreviews}">
-                    <td><a class="link-dark" th:text="${{sessionPreview.startTime}}"
-                           th:href="@{/tickets/create(sessionId = ${sessionPreview.id},
-                                filmName = ${sessionPreview.filmName})}"></a></td>
-                    <td th:text="${sessionPreview.filmName}" />
-                    <td th:text="${sessionPreview.hallName}" />
-                    <td th:text="${sessionPreview.price}"/>
+                <tr style="color: #442c66" th:each="sessionPreviewFilm: ${sessionPreview.value}">
+                    <td><a th:text="${{sessionPreviewFilm.startTime}}"
+                           th:href="@{/tickets/create(sessionId = ${sessionPreviewFilm.id},
+                                filmName = ${sessionPreviewFilm.filmName})}"></a></td>
+                    <td th:text="${sessionPreviewFilm.hallName}" />
+                    <td th:text="${sessionPreviewFilm.price}"/>
                 </tr>
                 </tbody>
             </table>
         </div>
+        </div>
+        <div class="col-2"></div>
     </div>
     <footer th:insert="blocks/footer :: footer"></footer>
 </div>

@@ -15,33 +15,25 @@
 <div class="container p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
-        <div class="row">
-            <table class="table table-borderless">
-                <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Название</th>
-                    <th scope="col">Описание</th>
-                    <th scope="col">Год</th>
-                    <th scope="col">Жанр</th>
-                    <th scope="col">Возраст</th>
-                    <th scope="col">Продолжительность</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="text-dark" th:each="filmPreview: ${filmPreviews}">
-                    <td class="mb-3">
-                        <img th:src="@{/files/{fileId}(fileId=${filmPreview.fileId})}" class="w-100" alt="No image">
-                    </td>
-                    <td th:text="${filmPreview.name}" />
-                    <td th:text="${filmPreview.description}" />
-                    <td th:text="${filmPreview.year}" />
-                    <td th:text="${filmPreview.genre}"/>
-                    <td th:text="${filmPreview.minimalAge}" />
-                    <td th:text="${filmPreview.durationInMinutes}" />
-                </tr>
-                </tbody>
-            </table>
+        <div class="row mt-3" th:each="filmPreview: ${filmPreviews}">
+            <div class="col-1"></div>
+            <div class="col-10 d-flex justify-content-center">
+                <div class="card shadow-lg rounded m-3" style="max-width: 740px;" >
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img th:src="@{/files/{fileId}(fileId=${filmPreview.fileId})}" alt="No image" class="img-fluid rounded-start">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="color: #442c66">
+                        <h5 class="card-title" th:text="${filmPreview.name}"></h5>
+                        <h6 class="card-text" th:text="${filmPreview.description}"></h6>
+                        <h6 class="card-text" th:text="${filmPreview.year} + ' | ' + ${filmPreview.genre} + ' | ' + ${filmPreview.minimalAge} + '+ | ' + ${filmPreview.durationInMinutes}"></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+            <div class="col-1"></div>
         </div>
     </div>
     <footer th:insert="blocks/footer :: footer"></footer>
