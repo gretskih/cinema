@@ -8,10 +8,18 @@ import ru.job4j.cinema.model.File;
 
 import java.util.Properties;
 
+/**
+ * Тесты для слоя: Репозиторий
+ * Модель: File
+ */
 class Sql2oFileRepositoryTest {
 
     private static Sql2oFileRepository sql2oFileRepository;
 
+    /**
+     * Инициализация поля репизитория sql2oFileRepository
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -29,6 +37,10 @@ class Sql2oFileRepositoryTest {
         sql2oFileRepository = new Sql2oFileRepository(sql2o);
     }
 
+    /**
+     * Поиск существующего в базе файла по id
+     * Метод File findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetFile() {
         File expectedFile = new File(2, "The Shawshank Redemption", "files\\The_Shawshank_Redemption.jpg");
@@ -37,11 +49,14 @@ class Sql2oFileRepositoryTest {
         Assertions.assertThat(actualFile).usingRecursiveComparison().isEqualTo(expectedFile);
     }
 
+    /**
+     * Поиск отсутствующего в базе файла по id
+     * Метод File findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetSomeFile() {
-        File expectedFile = new File(2, "The Shawshank Redemption", "files\\The_Shawshank_Redemption.jpg");
-        File actualFile = sql2oFileRepository.findById(expectedFile.getId() + 1);
+        File actualFile = sql2oFileRepository.findById(100);
 
-        Assertions.assertThat(actualFile).usingRecursiveComparison().isNotEqualTo(expectedFile);
+        Assertions.assertThat(actualFile).isNull();
     }
 }

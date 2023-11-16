@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
 import ru.job4j.cinema.preview.SessionPreview;
-import ru.job4j.cinema.service.FilmService;
 import ru.job4j.cinema.service.FilmSessionService;
 
 import java.time.LocalDateTime;
@@ -17,18 +16,29 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Тесты для слоя: Контроллер
+ * RequestMapping("/filmsessions")
+ */
 class FilmSessionControllerTest {
 
     private FilmSessionService filmSessionService;
 
     private FilmSessionController filmSessionController;
 
+    /**
+     * Инициализация mock заглушками полей filmSessionService, filmSessionController
+     */
     @BeforeEach
     public void initServices() {
         filmSessionService = mock(FilmSessionService.class);
         filmSessionController = new FilmSessionController(filmSessionService);
     }
 
+    /**
+     * Получение страницы filmsessions/list и карты с расписанием
+     * Метод String getAll(Model model)
+     */
     @Test
     public void whenRequestGetAllThenGetPageWithFilmSessionPreviews() {
         Map<String, Collection<SessionPreview>> expectedSessionPreviews = new TreeMap<>();

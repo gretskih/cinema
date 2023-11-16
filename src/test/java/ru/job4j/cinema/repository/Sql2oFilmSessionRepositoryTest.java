@@ -11,10 +11,18 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Properties;
 
+/**
+ * Тесты для слоя: Репозиторий
+ * Модель: FilmSession
+ */
 class Sql2oFilmSessionRepositoryTest {
 
     private static Sql2oFilmSessionRepository sql2oFilmSessionRepository;
 
+    /**
+     * Инициализация поля репизитория sql2oFilmSessionRepository
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -32,6 +40,10 @@ class Sql2oFilmSessionRepositoryTest {
         sql2oFilmSessionRepository = new Sql2oFilmSessionRepository(sql2o);
     }
 
+    /**
+     * Поиск существующей в базе сессии по id
+     * Метод FilmSession findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetFilmSession() {
         FilmSession expectedFilmSession = new FilmSession(12, 2, 3,
@@ -41,15 +53,20 @@ class Sql2oFilmSessionRepositoryTest {
         Assertions.assertThat(actualFilmSession).usingRecursiveComparison().isEqualTo(expectedFilmSession);
     }
 
+    /**
+     * Поиск отсутствующей в базе сессии по id
+     * Метод FilmSession findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetSomeFilmSession() {
-        FilmSession expectedFilmSession = new FilmSession(12, 2, 3,
-                LocalDateTime.of(2023, 11, 19, 21, 0, 0),
-                LocalDateTime.of(2023, 11, 19, 23, 22, 0), 250);
-        FilmSession actualFilmSession = sql2oFilmSessionRepository.findById(expectedFilmSession.getId() + 1);
-        Assertions.assertThat(actualFilmSession).usingRecursiveComparison().isNotEqualTo(expectedFilmSession);
+        FilmSession actualFilmSession = sql2oFilmSessionRepository.findById(100);
+        Assertions.assertThat(actualFilmSession).isNull();
     }
 
+    /**
+     * Получение полного списка сессий
+     * Метод Collection<FilmSession> findAll()
+     */
     @Test
     public void whenFindAllThenGetAllFilmSessions() {
         var expectedFilmSessions = Arrays.asList(

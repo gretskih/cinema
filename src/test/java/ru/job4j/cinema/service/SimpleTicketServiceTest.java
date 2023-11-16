@@ -12,11 +12,19 @@ import ru.job4j.cinema.repository.Sql2oTicketRepository;
 import java.util.Optional;
 import java.util.Properties;
 
+/**
+ * Тесты для слоя: Сервис
+ * Модель: Ticket
+ */
 class SimpleTicketServiceTest {
 
     private static SimpleTicketService simpleTicketService;
     private static Sql2o sql2o;
 
+    /**
+     * Инициализация полей сервиса simpleTicketService, sql2o
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -35,6 +43,9 @@ class SimpleTicketServiceTest {
         simpleTicketService = new SimpleTicketService(sql2oTicketRepository);
     }
 
+    /**
+     * Удаление всех строк из таблицы tickets
+     */
     @AfterEach
     public void clearTickets() {
         try (var connection = sql2o.open()) {
@@ -43,6 +54,10 @@ class SimpleTicketServiceTest {
         }
     }
 
+    /**
+     * Сохранение нового билета
+     * Метод Optional<Ticket> save(Ticket ticket)
+     */
     @Test
     public void whenSaveNewTicketThenGetNewTicket() {
         Ticket expectedTicked = new Ticket(1, 1, 1, 1, 1);
@@ -51,6 +66,10 @@ class SimpleTicketServiceTest {
         Assertions.assertThat(actualTicked).usingRecursiveComparison().isEqualTo(expectedTicked);
     }
 
+    /**
+     * Сохранение билета, который существует в таблице tickets
+     * Метод Optional<Ticket> save(Ticket ticket)
+     */
     @Test
     public void whenSaveExistingTicketThenGetEmptyTicket() {
         Ticket ticked = new Ticket(1, 1, 1, 1, 1);

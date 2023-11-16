@@ -10,10 +10,18 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Properties;
 
+/**
+ * Тесты для слоя: Репозиторий
+ * Модель: Film
+ */
 class Sql2oFilmRepositoryTest {
 
     private static Sql2oFilmRepository sql2oFilmRepository;
 
+    /**
+     * Инициализация поля репизитория sql2oFilmRepository
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -31,6 +39,10 @@ class Sql2oFilmRepositoryTest {
         sql2oFilmRepository = new Sql2oFilmRepository(sql2o);
     }
 
+    /**
+     * Поиск существующего в базе фильма по id
+     * Метод Film findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetFilm() {
         Film expectedFilm = new Film(1, "Зеленая миля",
@@ -43,18 +55,20 @@ class Sql2oFilmRepositoryTest {
         Assertions.assertThat(actualFilm).usingRecursiveComparison().isEqualTo(expectedFilm);
     }
 
+    /**
+     * Поиск отсутствующего в базе фильма по id
+     * Метод Film findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetSomeFilm() {
-        Film expectedFilm = new Film(1, "Зеленая миля",
-                "Пол Эджкомб — начальник блока смертников в тюрьме «Холодная гора», каждый из узников "
-                        + "которого однажды проходит «зеленую милю» по пути к месту казни. Пол повидал много "
-                        + "заключённых и надзирателей за время работы. Однако гигант Джон Коффи, обвинённый в "
-                        + "страшном преступлении, стал одним из самых необычных обитателей блока.",
-                new Film.Detail(1999, 2, 16, 189), 1);
-        Film actualFilm = sql2oFilmRepository.findById(expectedFilm.getId() + 1);
-        Assertions.assertThat(actualFilm).usingRecursiveComparison().isNotEqualTo(expectedFilm);
+        Film actualFilm = sql2oFilmRepository.findById(1000);
+        Assertions.assertThat(actualFilm).isNull();
     }
 
+    /**
+     * Получение полного списка фильмов
+     * Метод Collection<Film> findAll()
+     */
     @Test
     public void whenFindAllThenGetAllFilms() {
         Film expectedFilm1 = new Film(1, "Зеленая миля",

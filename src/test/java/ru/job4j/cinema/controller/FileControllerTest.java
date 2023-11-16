@@ -15,12 +15,19 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Тесты для слоя: Контроллер
+ * RequestMapping("/files")
+ */
 class FileControllerTest {
 
     private FileService fileService;
     private FileController fileController;
     private MultipartFile testFile;
 
+    /**
+     * Инициализация mock заглушками полей fileService, fileController, testFile
+     */
     @BeforeEach
     public void initServices() {
         fileService = mock(FileService.class);
@@ -28,6 +35,11 @@ class FileControllerTest {
         testFile = new MockMultipartFile("testFile.img", new byte[] {1, 2, 3});
     }
 
+    /**
+     * Запрос содержимого файла по id существующего объекта File
+     * Метод ResponseEntity<?> getById(@PathVariable int id)
+     * @throws Exception
+     */
     @Test
     public void whenRequestFileByIdThenGetResponseEntityOk() throws Exception {
         int expectedId = 1;
@@ -43,6 +55,10 @@ class FileControllerTest {
         assertThat(response.getBody()).isEqualTo(fileDto.getContent());
     }
 
+    /**
+     * Запрос содержимого файла по id отсутствующего объекта File
+     * Метод ResponseEntity<?> getById(@PathVariable int id)
+     */
     @Test
     public void whenRequestFileByIdThenGetResponseEntityNotFound() {
         int expectedId = 2;

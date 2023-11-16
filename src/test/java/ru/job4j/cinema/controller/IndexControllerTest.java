@@ -13,17 +13,28 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Тесты для слоя: Контроллер
+ * Mapping({"/", "/index"})
+ */
 class IndexControllerTest {
 
     private FilmService filmService;
     public IndexController indexController;
 
+    /**
+     * Инициализация mock заглушками полей filmService, indexController
+     */
     @BeforeEach
     public void initServices() {
         filmService = mock(FilmService.class);
         indexController = new IndexController(filmService);
     }
 
+    /**
+     * Получение страницы index и полного списка фильмов
+     * Метод String getIndex(Model model)
+     */
     @Test
     public void whenRequestGetAllThenGetIndexPageWithFilmPosters() {
         FilmPreview expectedFilmPreview1 = new FilmPreview(1, "Зеленая миля",
