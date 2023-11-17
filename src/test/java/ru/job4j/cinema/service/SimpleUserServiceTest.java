@@ -62,9 +62,15 @@ class SimpleUserServiceTest {
     @Test
     public void whenSaveNewUserThenGetNewUser() {
         User expectedUser = new User(1, "Name", "name@name.org", "1122");
-        User actualUser = simpleUserService.save(expectedUser).get();
+        Optional<User> actualUserOptional = simpleUserService.save(expectedUser);
 
-        Assertions.assertThat(actualUser).usingRecursiveComparison().isEqualTo(expectedUser);
+        Assertions.assertThat(actualUserOptional)
+                .isPresent()
+                .isNotEmpty()
+                .contains(expectedUser)
+                .hasValueSatisfying(file -> {
+                    Assertions.assertThat(file).usingRecursiveComparison().isEqualTo(expectedUser);
+                });
     }
 
     /**
@@ -77,7 +83,8 @@ class SimpleUserServiceTest {
         simpleUserService.save(user);
         Optional<User> actualUser = simpleUserService.save(user);
 
-        Assertions.assertThat(actualUser).isEqualTo(Optional.empty());
+        Assertions.assertThat(actualUser).isEmpty();
+        Assertions.assertThat(actualUser).isNotPresent();
     }
 
     /**
@@ -88,8 +95,14 @@ class SimpleUserServiceTest {
     public void whenSaveNewUserAndFindByEmailAndPasswordThenGetNewUser() {
         User expectedUser = new User(3, "FullName", "fullname@name.org", "1111");
         simpleUserService.save(expectedUser);
-        User actualUser = simpleUserService.findByEmailAndPassword(expectedUser.getEmail(), expectedUser.getPassword()).get();
-        Assertions.assertThat(actualUser).usingRecursiveComparison().isEqualTo(expectedUser);
+        Optional<User> actualUserOptional = simpleUserService.findByEmailAndPassword(expectedUser.getEmail(), expectedUser.getPassword());
+        Assertions.assertThat(actualUserOptional)
+                .isPresent()
+                .isNotEmpty()
+                .contains(expectedUser)
+                .hasValueSatisfying(file -> {
+                    Assertions.assertThat(file).usingRecursiveComparison().isEqualTo(expectedUser);
+                });
     }
 
     /**
@@ -101,6 +114,7 @@ class SimpleUserServiceTest {
         User user = new User(2, "UserName", "user@name.org", "1555");
         simpleUserService.save(user);
         Optional<User> actualUser = simpleUserService.findByEmailAndPassword("nonexistent@user.org", "0000");
-        Assertions.assertThat(actualUser).isEqualTo(Optional.empty());
+        Assertions.assertThat(actualUser).isEmpty();
+        Assertions.assertThat(actualUser).isNotPresent();
     }
 }

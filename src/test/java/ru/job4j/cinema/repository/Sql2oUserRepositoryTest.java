@@ -59,9 +59,15 @@ public class Sql2oUserRepositoryTest {
     @Test
     public void whenSaveNewUserThenGetNewUser() {
         User expectedUser = new User(1, "Name", "name@name.org", "1122");
-        User actualUser = sql2oUserRepository.save(expectedUser).get();
+        Optional<User> actualUserOptional = sql2oUserRepository.save(expectedUser);
 
-        Assertions.assertThat(actualUser).usingRecursiveComparison().isEqualTo(expectedUser);
+        Assertions.assertThat(actualUserOptional)
+                .isPresent()
+                .isNotEmpty()
+                .contains(expectedUser)
+                .hasValueSatisfying(file -> {
+                    Assertions.assertThat(file).usingRecursiveComparison().isEqualTo(expectedUser);
+                });
     }
 
     /**
@@ -72,9 +78,10 @@ public class Sql2oUserRepositoryTest {
     public void whenSaveExistingUserThenGetEmptyUser() {
         User user = new User(1, "Name", "name@name.org", "1122");
         sql2oUserRepository.save(user);
-        Optional<User> actualUser = sql2oUserRepository.save(user);
+        Optional<User> actualUserOptional = sql2oUserRepository.save(user);
 
-        Assertions.assertThat(actualUser).isEqualTo(Optional.empty());
+        Assertions.assertThat(actualUserOptional).isEmpty();
+        Assertions.assertThat(actualUserOptional).isNotPresent();
     }
 
     /**
@@ -85,8 +92,14 @@ public class Sql2oUserRepositoryTest {
     public void whenSaveNewUserAndFindByEmailAndPasswordThenGetNewUser() {
         User expectedUser = new User(3, "FullName", "fullname@name.org", "1111");
         sql2oUserRepository.save(expectedUser);
-        User actualUser = sql2oUserRepository.findByEmailAndPassword(expectedUser.getEmail(), expectedUser.getPassword()).get();
-        Assertions.assertThat(actualUser).usingRecursiveComparison().isEqualTo(expectedUser);
+        Optional<User> actualUserOptional = sql2oUserRepository.findByEmailAndPassword(expectedUser.getEmail(), expectedUser.getPassword());
+        Assertions.assertThat(actualUserOptional)
+                .isPresent()
+                .isNotEmpty()
+                .contains(expectedUser)
+                .hasValueSatisfying(file -> {
+                    Assertions.assertThat(file).usingRecursiveComparison().isEqualTo(expectedUser);
+                });
     }
 
     /**
@@ -97,7 +110,8 @@ public class Sql2oUserRepositoryTest {
     public void whenSaveNewUserAndFindByEmailAndPasswordThenGetEmptyUser() {
         User user = new User(2, "UserName", "user@name.org", "1555");
         sql2oUserRepository.save(user);
-        Optional<User> actualUser = sql2oUserRepository.findByEmailAndPassword("nonexistent@user.org", "0000");
-        Assertions.assertThat(actualUser).isEqualTo(Optional.empty());
+        Optional<User> actualUserOptional = sql2oUserRepository.findByEmailAndPassword("nonexistent@user.org", "0000");
+        Assertions.assertThat(actualUserOptional).isEmpty();
+        Assertions.assertThat(actualUserOptional).isNotPresent();
     }
 }

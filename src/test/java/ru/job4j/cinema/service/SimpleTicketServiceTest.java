@@ -61,9 +61,15 @@ class SimpleTicketServiceTest {
     @Test
     public void whenSaveNewTicketThenGetNewTicket() {
         Ticket expectedTicked = new Ticket(1, 1, 1, 1, 1);
-        Ticket actualTicked = simpleTicketService.save(expectedTicked).get();
+        Optional<Ticket> actualTickedOptional = simpleTicketService.save(expectedTicked);
 
-        Assertions.assertThat(actualTicked).usingRecursiveComparison().isEqualTo(expectedTicked);
+        Assertions.assertThat(actualTickedOptional)
+                .isPresent()
+                .isNotEmpty()
+                .contains(expectedTicked)
+                .hasValueSatisfying(file -> {
+                    Assertions.assertThat(file).usingRecursiveComparison().isEqualTo(expectedTicked);
+                });
     }
 
     /**
@@ -74,8 +80,9 @@ class SimpleTicketServiceTest {
     public void whenSaveExistingTicketThenGetEmptyTicket() {
         Ticket ticked = new Ticket(1, 1, 1, 1, 1);
         simpleTicketService.save(ticked);
-        Optional<Ticket> actualTicked = simpleTicketService.save(ticked);
+        Optional<Ticket> actualTickedOptional = simpleTicketService.save(ticked);
 
-        Assertions.assertThat(actualTicked).isEqualTo(Optional.empty());
+        Assertions.assertThat(actualTickedOptional).isEmpty();
+        Assertions.assertThat(actualTickedOptional).isNotPresent();
     }
 }

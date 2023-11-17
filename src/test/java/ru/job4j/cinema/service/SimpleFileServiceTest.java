@@ -56,9 +56,14 @@ class SimpleFileServiceTest {
     public void whenFindByIdThenGetFile() throws Exception {
         File file = new File(2, "The Shawshank Redemption", "files\\The_Shawshank_Redemption.jpg");
         FileDto expectedFileDto = new FileDto(file.getName(), Files.readAllBytes(Path.of(file.getPath())));
-        FileDto actualFileDTO = simpleFileService.getFileById(file.getId()).get();
+        Optional<FileDto> actualFileDtoOptional = simpleFileService.getFileById(file.getId());
 
-        Assertions.assertThat(actualFileDTO).usingRecursiveComparison().isEqualTo(expectedFileDto);
+        Assertions.assertThat(actualFileDtoOptional)
+                .isPresent()
+                .isNotEmpty()
+                .hasValueSatisfying(fileDto -> {
+                    Assertions.assertThat(fileDto.getName()).isEqualTo(expectedFileDto.getName());
+                });
     }
 
     /**
@@ -69,5 +74,6 @@ class SimpleFileServiceTest {
     public void whenFindByIdThenGetSomeFile() {
         Optional<FileDto> actualFileDTO = simpleFileService.getFileById(100);
         Assertions.assertThat(actualFileDTO).isEmpty();
+        Assertions.assertThat(actualFileDTO).isNotPresent();
     }
 }

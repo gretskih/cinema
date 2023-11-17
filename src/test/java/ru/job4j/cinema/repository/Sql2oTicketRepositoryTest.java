@@ -59,9 +59,15 @@ public class Sql2oTicketRepositoryTest {
     @Test
     public void whenSaveNewTicketThenGetNewTicket() {
         Ticket expectedTicked = new Ticket(1, 1, 1, 1, 1);
-        Ticket actualTicked = sql2oTicketRepository.save(expectedTicked).get();
+        Optional<Ticket> actualTickedOptional = sql2oTicketRepository.save(expectedTicked);
 
-        Assertions.assertThat(actualTicked).usingRecursiveComparison().isEqualTo(expectedTicked);
+        Assertions.assertThat(actualTickedOptional)
+                .isPresent()
+                .isNotEmpty()
+                .contains(expectedTicked)
+                .hasValueSatisfying(file -> {
+                    Assertions.assertThat(file).usingRecursiveComparison().isEqualTo(expectedTicked);
+                });
     }
 
     /**
@@ -72,8 +78,9 @@ public class Sql2oTicketRepositoryTest {
     public void whenSaveExistingTicketThenGetEmptyTicket() {
         Ticket ticked = new Ticket(1, 1, 1, 1, 1);
         sql2oTicketRepository.save(ticked);
-        Optional<Ticket> actualTicked = sql2oTicketRepository.save(ticked);
+        Optional<Ticket> actualTickedOptional = sql2oTicketRepository.save(ticked);
 
-        Assertions.assertThat(actualTicked).isEqualTo(Optional.empty());
+        Assertions.assertThat(actualTickedOptional).isEmpty();
+        Assertions.assertThat(actualTickedOptional).isNotPresent();
     }
 }

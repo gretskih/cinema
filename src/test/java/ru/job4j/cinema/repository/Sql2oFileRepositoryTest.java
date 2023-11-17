@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.configuration.DatasourceConfiguration;
 import ru.job4j.cinema.model.File;
 
+import java.util.Optional;
 import java.util.Properties;
 
 /**
@@ -44,9 +45,15 @@ class Sql2oFileRepositoryTest {
     @Test
     public void whenFindByIdThenGetFile() {
         File expectedFile = new File(2, "The Shawshank Redemption", "files\\The_Shawshank_Redemption.jpg");
-        File actualFile = sql2oFileRepository.findById(expectedFile.getId());
+        Optional<File> actualFileOptional = sql2oFileRepository.findById(expectedFile.getId());
 
-        Assertions.assertThat(actualFile).usingRecursiveComparison().isEqualTo(expectedFile);
+        Assertions.assertThat(actualFileOptional)
+                .isPresent()
+                .isNotEmpty()
+                .contains(expectedFile)
+                .hasValueSatisfying(file -> {
+                    Assertions.assertThat(file).usingRecursiveComparison().isEqualTo(expectedFile);
+                });
     }
 
     /**
@@ -55,8 +62,9 @@ class Sql2oFileRepositoryTest {
      */
     @Test
     public void whenFindByIdThenGetSomeFile() {
-        File actualFile = sql2oFileRepository.findById(100);
+        Optional<File> actualFileOptional = sql2oFileRepository.findById(100);
 
-        Assertions.assertThat(actualFile).isNull();
+        Assertions.assertThat(actualFileOptional).isEmpty();
+        Assertions.assertThat(actualFileOptional).isNotPresent();
     }
 }

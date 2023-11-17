@@ -23,17 +23,19 @@ public class SimpleFileService implements FileService {
 
     @Override
     public Optional<FileDto> getFileById(int id) {
-        var file = fileRepository.findById(id);
-        try {
-            var content = readFileAsBytes(file.getPath());
-            return Optional.of(new FileDto(file.getName(), content));
-        } catch (Exception e) {
-            LOG.error(e.toString());
+        var fileOptional = fileRepository.findById(id);
+        if (fileOptional.isEmpty()) {
+            return Optional.empty();
         }
-        return Optional.empty();
+        var content = readFileAsBytes(fileOptional.get().getPath());
+        return Optional.of(new FileDto(fileOptional.get().getName(), content));
     }
 
-    private byte[] readFileAsBytes(String path) throws Exception {
-        return Files.readAllBytes(Path.of(path));
+    private byte[] readFileAsBytes(String path) {
+        try {
+            return Files.readAllBytes(Path.of(path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
