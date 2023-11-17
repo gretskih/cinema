@@ -54,7 +54,7 @@ class SimpleFileServiceTest {
      */
     @Test
     public void whenFindByIdThenGetFile() throws Exception {
-        File file = new File(2, "The Shawshank Redemption", "files\\The_Shawshank_Redemption.jpg");
+        File file = new File(2, "The Shawshank Redemption", "src/main/resources/files/The_Shawshank_Redemption.jpg");
         FileDto expectedFileDto = new FileDto(file.getName(), Files.readAllBytes(Path.of(file.getPath())));
         Optional<FileDto> actualFileDtoOptional = simpleFileService.getFileById(file.getId());
 

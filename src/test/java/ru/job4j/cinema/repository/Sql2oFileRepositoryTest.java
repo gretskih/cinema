@@ -44,7 +44,7 @@ class Sql2oFileRepositoryTest {
      */
     @Test
     public void whenFindByIdThenGetFile() {
-        File expectedFile = new File(2, "The Shawshank Redemption", "files\\The_Shawshank_Redemption.jpg");
+        File expectedFile = new File(2, "The Shawshank Redemption", "src/main/resources/files/The_Shawshank_Redemption.jpg");
         Optional<File> actualFileOptional = sql2oFileRepository.findById(expectedFile.getId());
 
         Assertions.assertThat(actualFileOptional)
