@@ -2,31 +2,38 @@ package ru.job4j.cinema.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.ui.ConcurrentModel;
 import ru.job4j.cinema.preview.FilmPreview;
-import ru.job4j.cinema.service.FileService;
 import ru.job4j.cinema.service.FilmService;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Тесты для слоя: Контроллер
+ * RequestMapping("/films")
+ */
 class FilmControllerTest {
 
     private FilmService filmService;
     private FilmController filmController;
 
+    /**
+     * Инициализация mock заглушками полей filmService, filmController
+     */
     @BeforeEach
     public void initServices() {
         filmService = mock(FilmService.class);
         filmController = new FilmController(filmService);
     }
 
+    /**
+     * Получение страницы films/list и полного списка фильмов
+     * Метод String getAll(Model model)
+     */
     @Test
     public void whenRequestGetAllThenGetPageWithFilms() {
         FilmPreview expectedFilmPreview1 = new FilmPreview(1, "Зеленая миля",

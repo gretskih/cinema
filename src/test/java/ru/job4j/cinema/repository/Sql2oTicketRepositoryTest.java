@@ -11,11 +11,19 @@ import ru.job4j.cinema.model.Ticket;
 import java.util.Optional;
 import java.util.Properties;
 
+/**
+ * Тесты для слоя: Репозиторий
+ * Модель: Ticket
+ */
 public class Sql2oTicketRepositoryTest {
 
     private static Sql2oTicketRepository sql2oTicketRepository;
     private static Sql2o sql2o;
 
+    /**
+     * Инициализация полей репизитория sql2oTicketRepository, sql2o
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -33,6 +41,9 @@ public class Sql2oTicketRepositoryTest {
         sql2oTicketRepository = new Sql2oTicketRepository(sql2o);
     }
 
+    /**
+     * Удаление всех строк из таблицы tickets
+     */
     @AfterEach
     public void clearTickets() {
         try (var connection = sql2o.open()) {
@@ -41,6 +52,10 @@ public class Sql2oTicketRepositoryTest {
         }
     }
 
+    /**
+     * Сохранение нового билета
+     * Метод Optional<Ticket> save(Ticket ticket)
+     */
     @Test
     public void whenSaveNewTicketThenGetNewTicket() {
         Ticket expectedTicked = new Ticket(1, 1, 1, 1, 1);
@@ -49,6 +64,10 @@ public class Sql2oTicketRepositoryTest {
         Assertions.assertThat(actualTicked).usingRecursiveComparison().isEqualTo(expectedTicked);
     }
 
+    /**
+     * Сохранение билета, который существует в таблице tickets
+     * Метод Optional<Ticket> save(Ticket ticket)
+     */
     @Test
     public void whenSaveExistingTicketThenGetEmptyTicket() {
         Ticket ticked = new Ticket(1, 1, 1, 1, 1);

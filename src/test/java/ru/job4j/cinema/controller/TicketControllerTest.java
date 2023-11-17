@@ -20,6 +20,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Тесты для слоя: Контроллер
+ * RequestMapping("/tickets")
+ */
 class TicketControllerTest {
 
     private HallService hallService;
@@ -27,6 +31,9 @@ class TicketControllerTest {
     private TicketService ticketService;
     private TicketController ticketController;
 
+    /**
+     * Инициализация mock заглушками полей hallService, filmSessionService, ticketService
+     */
     @BeforeEach
     public void initServices() {
         hallService = mock(HallService.class);
@@ -35,6 +42,10 @@ class TicketControllerTest {
         ticketController = new TicketController(hallService, filmSessionService, ticketService);
     }
 
+    /**
+     * Получение страницы tickets/create с аттрибутами: filmSession, hall, filmName, rows, places
+     * Метод String getCreationPage(Model model, int sessionId, String filmName)
+     */
     @Test
     public void whenRequestGetCreationPageThenGetCreateNewTicketPage() {
         int sessionId = 1;
@@ -61,7 +72,7 @@ class TicketControllerTest {
         var actualHallId = hallIdCaptor.getValue();
 
         assertThat(actualFilmSession).usingRecursiveComparison().isEqualTo(filmSession);
-        assertThat(hall).usingRecursiveComparison().isEqualTo(hall);
+        assertThat(actualHall).usingRecursiveComparison().isEqualTo(hall);
         assertThat(actualFilmName).isEqualTo(filmName);
         assertThat(actualRows).isEqualTo(expectedList);
         assertThat(actualPlaces).isEqualTo(expectedList);
@@ -70,6 +81,10 @@ class TicketControllerTest {
         assertThat(actualHallId).isEqualTo(hallId);
     }
 
+    /**
+     * Сохранение нового билета в базу и получение страницы tickets/success
+     * Метод String create(@ModelAttribute Ticket ticket, Model model)
+     */
     @Test
     public void whenPostTicketThenGetPageSuccessWithMessage() {
         Ticket ticket = new Ticket(1, 1, 1, 1, 1);
@@ -88,6 +103,10 @@ class TicketControllerTest {
         assertThat(actualTicket).isEqualTo(ticket);
     }
 
+    /**
+     * Сохранение уже существующего билета в базу и получение страницы errors/404
+     * Метод String create(@ModelAttribute Ticket ticket, Model model)
+     */
     @Test
     public void whenPostTicketThenGetErrorPageWithErrorMessage() {
         Ticket ticket = new Ticket(1, 1, 1, 1, 1);

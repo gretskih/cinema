@@ -15,6 +15,9 @@ import java.io.IOException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
+/**
+ * Тест - добавление пользователя в модель
+ */
 class SessionFilterTest {
 
     private final SessionFilter sessionFilter = new SessionFilter();
@@ -22,6 +25,11 @@ class SessionFilterTest {
     private final HttpServletResponse response = mock(HttpServletResponse.class);
     private final FilterChain filterChain = mock(FilterChain.class);
 
+    /**
+     * Добавление в модель пользователя - Гость.
+     * @throws ServletException
+     * @throws IOException
+     */
     @Test
     public void whenRequestAnyPageWithNullUserThenSetUserGuest() throws ServletException, IOException {
         var expectedUser = new User();
@@ -39,6 +47,11 @@ class SessionFilterTest {
         assertThat(actualUser.getFullName()).isEqualTo(expectedUser.getFullName());
     }
 
+    /**
+     * Добавление в модель пользователя - User.
+     * @throws ServletException
+     * @throws IOException
+     */
     @Test
     public void whenRequestAnyPageWithAnyUserThenSetValidUser() throws ServletException, IOException {
         var expectedUser = new User();

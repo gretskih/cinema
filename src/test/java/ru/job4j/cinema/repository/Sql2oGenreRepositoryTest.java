@@ -8,10 +8,18 @@ import ru.job4j.cinema.model.Genre;
 
 import java.util.Properties;
 
+/**
+ * Тесты для слоя: Репозиторий
+ * Модель: Genre
+ */
 class Sql2oGenreRepositoryTest {
 
     private static Sql2oGenreRepository sql2oGenreRepository;
 
+    /**
+     * Инициализация поля репизитория sql2oGenreRepository
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -29,6 +37,10 @@ class Sql2oGenreRepositoryTest {
         sql2oGenreRepository = new Sql2oGenreRepository(sql2o);
     }
 
+    /**
+     * Поиск существующего в базе жанра по id
+     * Метод Genre findById(int id)
+     */
     @Test
     void whenFindByIdThenGetGenre() {
         Genre expectedGenre = new Genre(3, "Криминал");
@@ -36,10 +48,13 @@ class Sql2oGenreRepositoryTest {
         Assertions.assertThat(actualGenre).usingRecursiveComparison().isEqualTo(expectedGenre);
     }
 
+    /**
+     * Поиск отсутствующего в базе жанра по id
+     * Метод Genre findById(int id)
+     */
     @Test
     void whenFindByIdThenGetSomeGenre() {
-        Genre expectedGenre = new Genre(3, "Криминал");
-        Genre actualGenre = sql2oGenreRepository.findById(expectedGenre.getId() + 1);
-        Assertions.assertThat(actualGenre).usingRecursiveComparison().isNotEqualTo(expectedGenre);
+        Genre actualGenre = sql2oGenreRepository.findById(100);
+        Assertions.assertThat(actualGenre).isNull();
     }
 }

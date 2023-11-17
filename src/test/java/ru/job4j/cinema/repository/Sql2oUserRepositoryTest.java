@@ -11,11 +11,19 @@ import ru.job4j.cinema.model.User;
 import java.util.Optional;
 import java.util.Properties;
 
+/**
+ * Тесты для слоя: Репозиторий
+ * Модель: User
+ */
 public class Sql2oUserRepositoryTest {
 
     private static Sql2oUserRepository sql2oUserRepository;
     private static Sql2o sql2o;
 
+    /**
+     * Инициализация полей репизитория sql2oUserRepository, sql2o
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -33,6 +41,9 @@ public class Sql2oUserRepositoryTest {
         sql2oUserRepository = new Sql2oUserRepository(sql2o);
     }
 
+    /**
+     * Удаление всех строк из таблицы users
+     */
     @AfterEach
     public void clearUsers() {
         try (var connection = sql2o.open()) {
@@ -41,6 +52,10 @@ public class Sql2oUserRepositoryTest {
         }
     }
 
+    /**
+     * Сохранение нового пользователя
+     * Метод Optional<User> save(User user)
+     */
     @Test
     public void whenSaveNewUserThenGetNewUser() {
         User expectedUser = new User(1, "Name", "name@name.org", "1122");
@@ -49,12 +64,40 @@ public class Sql2oUserRepositoryTest {
         Assertions.assertThat(actualUser).usingRecursiveComparison().isEqualTo(expectedUser);
     }
 
+    /**
+     * Сохранение пользователя, который существует в таблице users
+     * Метод Optional<User> save(User user)
+     */
     @Test
     public void whenSaveExistingUserThenGetEmptyUser() {
         User user = new User(1, "Name", "name@name.org", "1122");
         sql2oUserRepository.save(user);
         Optional<User> actualUser = sql2oUserRepository.save(user);
 
+        Assertions.assertThat(actualUser).isEqualTo(Optional.empty());
+    }
+
+    /**
+     * Поиск существующего в базе пользователя по почте email и паролю password
+     * Метод Optional<User> findByEmailAndPassword(String email, String password)
+     */
+    @Test
+    public void whenSaveNewUserAndFindByEmailAndPasswordThenGetNewUser() {
+        User expectedUser = new User(3, "FullName", "fullname@name.org", "1111");
+        sql2oUserRepository.save(expectedUser);
+        User actualUser = sql2oUserRepository.findByEmailAndPassword(expectedUser.getEmail(), expectedUser.getPassword()).get();
+        Assertions.assertThat(actualUser).usingRecursiveComparison().isEqualTo(expectedUser);
+    }
+
+    /**
+     * Поиск отсутствующего в базе пользователя по почте email и паролю password
+     * Метод Optional<User> findByEmailAndPassword(String email, String password)
+     */
+    @Test
+    public void whenSaveNewUserAndFindByEmailAndPasswordThenGetEmptyUser() {
+        User user = new User(2, "UserName", "user@name.org", "1555");
+        sql2oUserRepository.save(user);
+        Optional<User> actualUser = sql2oUserRepository.findByEmailAndPassword("nonexistent@user.org", "0000");
         Assertions.assertThat(actualUser).isEqualTo(Optional.empty());
     }
 }

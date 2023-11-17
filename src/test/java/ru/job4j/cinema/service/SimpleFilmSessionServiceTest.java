@@ -11,6 +11,10 @@ import ru.job4j.cinema.repository.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Тесты для слоя: Сервис
+ * Модель: FilmSession, SessionPreview
+ */
 class SimpleFilmSessionServiceTest {
 
     private static Sql2oFilmSessionRepository sql2oFilmSessionRepository;
@@ -18,6 +22,10 @@ class SimpleFilmSessionServiceTest {
     private static Sql2oFilmRepository sql2ofilmRepository;
     private static SimpleFilmSessionService simpleFilmSessionService;
 
+    /**
+     * Инициализация полей сервиса sql2oFilmSessionRepository, sql2ohallRepository, sql2ofilmRepository, simpleFilmSessionService
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -38,6 +46,10 @@ class SimpleFilmSessionServiceTest {
         simpleFilmSessionService = new SimpleFilmSessionService(sql2oFilmSessionRepository, sql2ohallRepository, sql2ofilmRepository);
     }
 
+    /**
+     * Получение объекта FilmSession по id существующей сессии
+     * Метод FilmSession findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetFilm() {
         FilmSession expectedFilmSession = new FilmSession(1, 1, 1,
@@ -48,16 +60,20 @@ class SimpleFilmSessionServiceTest {
         Assertions.assertThat(actualFilmSession).usingRecursiveComparison().isEqualTo(expectedFilmSession);
     }
 
+    /**
+     * Получение объекта FilmSession по id отсутствующей сессии
+     * Метод FilmSession findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetSomeFilm() {
-        FilmSession expectedFilmSession = new FilmSession(1, 1, 1,
-                LocalDateTime.of(2023, 11, 19, 10, 0, 0),
-                LocalDateTime.of(2023, 11, 19, 13, 9, 0), 200);
-
-        FilmSession actualFilmSession = simpleFilmSessionService.findById(expectedFilmSession.getId() + 1);
-        Assertions.assertThat(actualFilmSession).usingRecursiveComparison().isNotEqualTo(expectedFilmSession);
+        FilmSession actualFilmSession = simpleFilmSessionService.findById(1000);
+        Assertions.assertThat(actualFilmSession).isNull();
     }
 
+    /**
+     * Получение карты Map<String, Collection<SessionPreview>> со списками SessionPreview
+     * Метод Map<String, Collection<SessionPreview>> findAll()
+     */
     @Test
     public void whenFindAllThenGetAllSessionsPreviews() {
         Map<String, Collection<SessionPreview>> expectedSessionPreviews = new TreeMap<>();

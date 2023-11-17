@@ -13,13 +13,23 @@ import ru.job4j.cinema.repository.Sql2oUserRepository;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Properties;
 
+/**
+ * Тесты для слоя: Сервис
+ * Модель: FileDto
+ */
 class SimpleFileServiceTest {
 
     private static Sql2oFileRepository sql2oFileRepository;
     private static SimpleFileService simpleFileService;
 
+    /**
+     * Инициализация полей сервиса sql2oFileRepository, simpleFileService
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -38,6 +48,10 @@ class SimpleFileServiceTest {
         simpleFileService = new SimpleFileService(sql2oFileRepository);
     }
 
+    /**
+     * Получение объекта FileDto по id существующего файла
+     * Метод Optional<FileDto> getFileById(int id)
+     */
     @Test
     public void whenFindByIdThenGetFile() throws Exception {
         File file = new File(2, "The Shawshank Redemption", "files\\The_Shawshank_Redemption.jpg");
@@ -47,12 +61,13 @@ class SimpleFileServiceTest {
         Assertions.assertThat(actualFileDTO).usingRecursiveComparison().isEqualTo(expectedFileDto);
     }
 
+    /**
+     * Получение объекта FileDto по id отсутствующего файла
+     * Метод Optional<FileDto> getFileById(int id)
+     */
     @Test
-    public void whenFindByIdThenGetSomeFile() throws Exception {
-        File file = new File(2, "The Shawshank Redemption", "files\\The_Shawshank_Redemption.jpg");
-        FileDto expectedFileDto = new FileDto(file.getName(), Files.readAllBytes(Path.of(file.getPath())));
-        FileDto actualFileDTO = simpleFileService.getFileById(file.getId() + 1).get();
-
-        Assertions.assertThat(actualFileDTO).usingRecursiveComparison().isNotEqualTo(expectedFileDto);
+    public void whenFindByIdThenGetSomeFile() {
+        Optional<FileDto> actualFileDTO = simpleFileService.getFileById(100);
+        Assertions.assertThat(actualFileDTO).isEmpty();
     }
 }

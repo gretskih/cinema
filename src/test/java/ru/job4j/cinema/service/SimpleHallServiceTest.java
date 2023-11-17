@@ -1,26 +1,28 @@
 package ru.job4j.cinema.service;
 
-import org.apache.el.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.configuration.DatasourceConfiguration;
 import ru.job4j.cinema.model.Hall;
-import ru.job4j.cinema.repository.Sql2oFilmRepository;
 import ru.job4j.cinema.repository.Sql2oHallRepository;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
+/**
+ * Тесты для слоя: Сервис
+ * Модель: Hall
+ */
 class SimpleHallServiceTest {
 
     private static Sql2oHallRepository  sql2oHallRepository;
 
     private static SimpleHallService simpleHallService;
 
+    /**
+     * Инициализация полей сервиса sql2oHallRepository, simpleHallService
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -39,6 +41,10 @@ class SimpleHallServiceTest {
         simpleHallService = new SimpleHallService(sql2oHallRepository);
     }
 
+    /**
+     * Получение объекта Hall по id существующего зала
+     * Метод Hall findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetHall() {
         Hall expectedHall = new Hall(1, "VIP", 4, 4, "Cамый камерный и индивидуальный. Здесь всего 16 комфортных кресел-реклайнеров, увеличенное расстояние между креслами и рядами, кнопка вызова официанта, а также профессиональное караоке оборудование — именно поэтому  этот зал чаще остальных востребован для проведения закрытых персональных кинопоказов и проведения частных мероприятий, среди которых дни рождения, помолвки, девичники и др.");
@@ -47,11 +53,14 @@ class SimpleHallServiceTest {
         Assertions.assertThat(actualHall).usingRecursiveComparison().isEqualTo(expectedHall);
     }
 
+    /**
+     * Получение объекта Hall по id отсутствующего зала
+     * Метод Hall findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetSomeHall() {
-        Hall expectedHall = new Hall(1, "VIP", 4, 4, "Cамый камерный и индивидуальный. Здесь всего 16 комфортных кресел-реклайнеров, увеличенное расстояние между креслами и рядами, кнопка вызова официанта, а также профессиональное караоке оборудование — именно поэтому  этот зал чаще остальных востребован для проведения закрытых персональных кинопоказов и проведения частных мероприятий, среди которых дни рождения, помолвки, девичники и др.");
-        Hall actualHall = simpleHallService.findById(expectedHall.getId() + 1);
+        Hall actualHall = simpleHallService.findById(1000);
 
-        Assertions.assertThat(actualHall).usingRecursiveComparison().isNotEqualTo(expectedHall);
+        Assertions.assertThat(actualHall).isNull();
     }
 }

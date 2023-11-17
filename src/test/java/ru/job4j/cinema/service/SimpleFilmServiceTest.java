@@ -12,12 +12,20 @@ import ru.job4j.cinema.repository.Sql2oGenreRepository;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Тесты для слоя: Сервис
+ * Модель: Film, FilmPreview
+ */
 class SimpleFilmServiceTest {
 
     private static Sql2oFilmRepository sql2oFilmRepository;
 
     private static SimpleFilmService simpleFilmService;
 
+    /**
+     * Инициализация полей сервиса sql2oFilmRepository, simpleFilmService
+     * @throws Exception
+     */
     @BeforeAll
     public static void initRepositories() throws Exception {
         var properties = new Properties();
@@ -37,6 +45,10 @@ class SimpleFilmServiceTest {
         simpleFilmService = new SimpleFilmService(sql2oFilmRepository, sql2ogenreRepository);
     }
 
+    /**
+     * Получение объекта Film по id существующего фильма
+     * Метод Film findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetFilm() {
         Film expectedFilm = new Film(1, "Зеленая миля",
@@ -49,18 +61,20 @@ class SimpleFilmServiceTest {
         Assertions.assertThat(actualFilm).usingRecursiveComparison().isEqualTo(expectedFilm);
     }
 
+    /**
+     * Получение объекта Film по id отсутствующего фильма
+     * Метод Film findById(int id)
+     */
     @Test
     public void whenFindByIdThenGetSomeFilm() {
-        Film expectedFilm = new Film(1, "Зеленая миля",
-                "Пол Эджкомб — начальник блока смертников в тюрьме «Холодная гора», каждый из узников "
-                        + "которого однажды проходит «зеленую милю» по пути к месту казни. Пол повидал много "
-                        + "заключённых и надзирателей за время работы. Однако гигант Джон Коффи, обвинённый в "
-                        + "страшном преступлении, стал одним из самых необычных обитателей блока.",
-                new Film.Detail(1999, 2, 16, 189), 1);
-        Film actualFilm = sql2oFilmRepository.findById(expectedFilm.getId() + 1);
-        Assertions.assertThat(actualFilm).usingRecursiveComparison().isNotEqualTo(expectedFilm);
+        Film actualFilm = sql2oFilmRepository.findById(100);
+        Assertions.assertThat(actualFilm).isNull();
     }
 
+    /**
+     * Получение полного списка фильмов FilmPreview
+     * Метод Collection<FilmPreview> findAll()
+     */
     @Test
     public void whenFindAllThenGetAllFilms() {
         FilmPreview expectedFilmPreview1 = new FilmPreview(1, "Зеленая миля",
