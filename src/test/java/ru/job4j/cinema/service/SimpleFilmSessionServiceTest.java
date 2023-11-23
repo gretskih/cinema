@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.job4j.cinema.configuration.DatasourceConfiguration;
 import ru.job4j.cinema.model.FilmSession;
-import ru.job4j.cinema.preview.SessionPreview;
+import ru.job4j.cinema.dto.SessionPreview;
 import ru.job4j.cinema.repository.*;
 
 import java.time.LocalDateTime;

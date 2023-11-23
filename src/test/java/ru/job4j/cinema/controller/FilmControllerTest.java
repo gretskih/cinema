@@ -3,7 +3,7 @@ package ru.job4j.cinema.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
-import ru.job4j.cinema.preview.FilmPreview;
+import ru.job4j.cinema.dto.FilmPreview;
 import ru.job4j.cinema.service.FilmService;
 
 import java.util.List;

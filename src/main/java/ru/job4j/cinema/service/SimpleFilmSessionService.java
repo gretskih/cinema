@@ -4,7 +4,7 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.cinema.model.Film;
 import ru.job4j.cinema.model.FilmSession;
-import ru.job4j.cinema.preview.SessionPreview;
+import ru.job4j.cinema.dto.SessionPreview;
 import ru.job4j.cinema.repository.FilmRepository;
 import ru.job4j.cinema.repository.FilmSessionRepository;
 import ru.job4j.cinema.repository.HallRepository;
@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 @ThreadSafe
 @Service

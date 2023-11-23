@@ -3,7 +3,7 @@ package ru.job4j.cinema.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
-import ru.job4j.cinema.preview.SessionPreview;
+import ru.job4j.cinema.dto.SessionPreview;
 import ru.job4j.cinema.service.FilmSessionService;
 
 import java.time.LocalDateTime;

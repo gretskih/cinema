@@ -1,15 +1,13 @@
 package ru.job4j.cinema.service;
 
 import org.springframework.stereotype.Service;
-import ru.job4j.cinema.preview.FilmPreview;
+import ru.job4j.cinema.dto.FilmPreview;
 import ru.job4j.cinema.model.Film;
-import ru.job4j.cinema.model.Genre;
 import ru.job4j.cinema.repository.FilmRepository;
 import ru.job4j.cinema.repository.GenreRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 @Service
 public class SimpleFilmService implements FilmService {

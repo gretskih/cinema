@@ -1,4 +1,4 @@
-package ru.job4j.cinema.preview;
+package ru.job4j.cinema.dto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

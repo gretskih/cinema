@@ -1,6 +1,4 @@
-package ru.job4j.cinema.preview;
-
-import ru.job4j.cinema.model.Film;
+package ru.job4j.cinema.dto;
 
 import java.util.Objects;
 
