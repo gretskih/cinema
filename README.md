@@ -8,14 +8,14 @@
 
 ## Стек технологий
 - Java 17
-- Spring
-- Sql2o
-- Thymeleaf
-- Liquibase
-- PostgreSQL
-- Mockito
-- Maven
-- Bootstrap
+- Spring 2.7.6
+- Sql2o 1.6.0
+- Thymeleaf 3.0.15
+- Liquibase 4.15.0
+- PostgreSQL 42.5.1
+- Mockito 3.5.13
+- Maven 4.0.0
+- Bootstrap 4
 
 ## Окружение
 - Java 17
